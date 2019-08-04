@@ -97,9 +97,9 @@
     <Folder Include="Resources\drawable-xxxhdpi\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\curecon\curecon.csproj">
-      <Project>{1C12F8EA-2C35-441F-9860-738298929F2C}</Project>
-      <Name>curecon</Name>
+    <ProjectReference Include="..\curecon.FormsUI\curecon.FormsUI.csproj">
+      <Project>{9BFB08DB-CF2A-44EE-BB36-26E34B5C6202}</Project>
+      <Name>curecon.FormsUI</Name>
     </ProjectReference>
   </ItemGroup>
  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
