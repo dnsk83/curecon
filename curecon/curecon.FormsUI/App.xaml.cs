@@ -14,7 +14,7 @@ namespace curecon
         {
             InitializeComponent();
 
-            MainPage = new ConvertedValuesPage();
+            MainPage = new NavigationPage(new ConvertedValuesPage());
         }
 
         protected override void OnStart()

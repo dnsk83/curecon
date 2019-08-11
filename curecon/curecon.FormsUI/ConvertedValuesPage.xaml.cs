@@ -21,6 +21,13 @@ namespace curecon.FormsUI
 
             VM = new ConvertedValuesListViewModel();
             this.BindingContext = VM;
+
+            VM.AddCurrencyRequested += VM_AddCurrencyRequested;
+        }
+
+        private void VM_AddCurrencyRequested(object sender, EventArgs e)
+        {
+            this.Navigation.PushAsync(new CurrenciesListPage());
         }
     }
 }

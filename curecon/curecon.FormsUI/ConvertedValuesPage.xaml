@@ -24,6 +24,8 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <Button Text="Add"
+                    Command="{Binding AddCurrencyCommand}" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
