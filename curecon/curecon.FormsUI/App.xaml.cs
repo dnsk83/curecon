@@ -13,7 +13,7 @@ namespace curecon
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new CurrenciesListPage();
         }
 
         protected override void OnStart()

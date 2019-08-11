@@ -13,11 +13,11 @@ namespace curecon
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer
     [DesignTimeVisible(true)]
-    public partial class MainPage : ContentPage
+    public partial class CurrenciesListPage : ContentPage
     {
         public CurrencyListViewModel VM { get; set; }
 
-        public MainPage()
+        public CurrenciesListPage()
         {
             InitializeComponent();
 
