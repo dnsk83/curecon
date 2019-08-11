@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows.Input;
 
 namespace curecon.ViewModels
 {
@@ -12,14 +9,14 @@ namespace curecon.ViewModels
         public event EventHandler AddCurrencyRequested;
         public event PropertyChangedEventHandler PropertyChanged;
         public ObservableCollection<ConvertedValueViewModel> ConvertedValuesList { get; set; }
-        public ICommand AddCurrencyCommand { get; set; }
+        public Command AddCurrencyCommand { get; set; }
 
         public ConvertedValuesListViewModel()
         {
             ConvertedValuesList = new ObservableCollection<ConvertedValueViewModel>();
             LoadData();
             OnPropertyChanged(nameof(ConvertedValuesList));
-            AddCurrencyCommand = new AddCurrencyCommand(OnAddCurrency);
+            AddCurrencyCommand = new Command(OnAddCurrency);
         }
 
         private void OnAddCurrency()
@@ -39,25 +36,4 @@ namespace curecon.ViewModels
         }
     }
 
-    internal class AddCurrencyCommand : ICommand
-    {
-        private Action p;
-
-        public AddCurrencyCommand(Action p)
-        {
-            this.p = p;
-        }
-
-        public event EventHandler CanExecuteChanged;
-
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public void Execute(object parameter)
-        {
-            p?.Invoke();
-        }
-    }
 }
