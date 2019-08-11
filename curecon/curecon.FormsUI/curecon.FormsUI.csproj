@@ -21,5 +21,13 @@
     <Compile Update="CurrenciesListPage.xaml.cs">
       <DependentUpon>CurrenciesListPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="ConvertedValuesPage.xaml.cs">
+      <DependentUpon>ConvertedValuesPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="ConvertedValuesPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

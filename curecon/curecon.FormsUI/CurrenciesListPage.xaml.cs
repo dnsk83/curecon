@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 using curecon.Core;
 using curecon.ViewModels;
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
-namespace curecon
+namespace curecon.FormsUI
 {
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="curecon.FormsUI.ConvertedValuesPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView ItemsSource="{Binding ConvertedValuesList}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal">
+                                <Image WidthRequest="64"
+                                       HeightRequest="64"
+                                       Source="{Binding FlagUri}" />
+                                <Label FontSize="Caption"
+                                       Text="{Binding Code}" />
+                                <Entry Text="{Binding Value}"
+                                       Keyboard="Numeric" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

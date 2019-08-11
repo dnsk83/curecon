@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using curecon.Core;
+using curecon.FormsUI;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -13,7 +14,7 @@ namespace curecon
         {
             InitializeComponent();
 
-            MainPage = new CurrenciesListPage();
+            MainPage = new ConvertedValuesPage();
         }
 
         protected override void OnStart()
