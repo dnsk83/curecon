@@ -22,15 +22,9 @@ namespace curecon.Models
             {
                 foreach (var currency in dto.Currencies)
                 {
-                    CurrencyModels.Add(new CurrencyModel() { Code = currency.Code, Name = currency.Name, FlagUri = GetFlagUri(dto.Alpha2Code) });
+                    CurrencyModels.Add(new CurrencyModel() { Code = currency.Code, Name = currency.Name, FlagUri = CurrencyModel.SetFlagUri(dto.Alpha2Code) });
                 }
             }
-        }
-
-        // TODO: move to currency model
-        private string GetFlagUri(string alpha2Code)
-        {
-            return $"https://www.countryflags.io/{alpha2Code}/flat/64.png";
         }
     }
 }
