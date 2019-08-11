@@ -6,7 +6,8 @@
     <StackLayout>
         <!-- Place new controls here -->
         <ListView
-            ItemsSource="{Binding Currencies}">
+            ItemsSource="{Binding Currencies}"
+            ItemSelected="ListView_ItemSelected">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>

@@ -27,7 +27,12 @@ namespace curecon.FormsUI
 
         private void VM_AddCurrencyRequested(object sender, EventArgs e)
         {
-            this.Navigation.PushAsync(new CurrenciesListPage());
+            var curList = new CurrenciesListPage();
+            curList.CurrencySelected += (s, curSelectedEvtArgs) =>
+              {
+                  VM.AddCurrency(curSelectedEvtArgs.CurrencyViewModel);
+              };
+            this.Navigation.PushAsync(curList);
         }
     }
 }

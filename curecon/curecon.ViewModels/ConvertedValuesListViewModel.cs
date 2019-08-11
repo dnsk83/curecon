@@ -16,12 +16,18 @@ namespace curecon.ViewModels
             ConvertedValuesList = new ObservableCollection<ConvertedValueViewModel>();
             LoadData();
             OnPropertyChanged(nameof(ConvertedValuesList));
-            AddCurrencyCommand = new Command(OnAddCurrency);
+            AddCurrencyCommand = new Command(RequestAddCurrency);
         }
 
-        private void OnAddCurrency()
+        private void RequestAddCurrency()
         {
             AddCurrencyRequested?.Invoke(this, new EventArgs());
+        }
+
+        public void AddCurrency(CurrencyViewModel currencyVieModel)
+        {
+            ConvertedValuesList.Add(new ConvertedValueViewModel() { Code = currencyVieModel.Code, FlagUri = currencyVieModel.FlagUri, Value = 1m });
+            OnPropertyChanged(nameof(ConvertedValuesList));
         }
 
         private void LoadData()

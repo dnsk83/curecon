@@ -17,6 +17,7 @@ namespace curecon.FormsUI
     public partial class CurrenciesListPage : ContentPage
     {
         public CurrencyListViewModel VM { get; set; }
+        public event EventHandler<CurrencySelectedEventArgs> CurrencySelected;
 
         public CurrenciesListPage()
         {
@@ -24,6 +25,22 @@ namespace curecon.FormsUI
 
             VM = new CurrencyListViewModel();
             this.BindingContext = VM;
+        }
+
+        private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            CurrencySelected?.Invoke(this, new CurrencySelectedEventArgs((CurrencyViewModel)e.SelectedItem));
+            Navigation.PopAsync();
+        }
+    }
+
+    public class CurrencySelectedEventArgs
+    {
+        public CurrencyViewModel CurrencyViewModel { get; set; }
+
+        public CurrencySelectedEventArgs(CurrencyViewModel currencyViewModel)
+        {
+            CurrencyViewModel=currencyViewModel;
         }
     }
 }
