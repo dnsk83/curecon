@@ -1,10 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\curecon.Core\curecon.Core.csproj" />
+    <ProjectReference Include="..\curecon.Models\curecon.Models.csproj" />
   </ItemGroup>
 </Project>

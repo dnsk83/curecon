@@ -1,14 +1,15 @@
-﻿using System;
+﻿using curecon.Core;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace curecon.Core
+namespace curecon.Models
 {
-    public class Converter
+    public class CurrencyListModel
     {
         public List<CurrencyModel> CurrencyModels { get; set; }
 
-        public Converter()
+        public CurrencyListModel()
         {
             CurrencyModels = new List<CurrencyModel>();
         }

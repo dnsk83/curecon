@@ -1,5 +1,5 @@
 ﻿using System;
-namespace curecon.Core
+namespace curecon.Models
 {
     public class CurrencyModel
     {

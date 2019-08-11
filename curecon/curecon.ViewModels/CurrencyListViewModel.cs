@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using curecon.Core;
+using curecon.Models;
 
 namespace curecon.ViewModels
 {
@@ -11,7 +12,7 @@ namespace curecon.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public Converter Converter { get; set; }
+        public CurrencyListModel Converter { get; set; }
         public ObservableCollection<CurrencyViewModel> Currencies { get; set; }
 
         public CurrencyListViewModel()
@@ -23,7 +24,7 @@ namespace curecon.ViewModels
 
         private async Task LoadDataAsync()
         {
-            await LoadConverterAsync();
+            await LoadModelAsync();
 
             foreach (var model in Converter.CurrencyModels)
             {
@@ -38,9 +39,9 @@ namespace curecon.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private async Task LoadConverterAsync()
+        private async Task LoadModelAsync()
         {
-            Converter = new Converter();
+            Converter = new CurrencyListModel();
             await Converter.LoadCurrenciesAsync();
         }
     }
