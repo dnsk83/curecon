@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using curecon.Core;
+using curecon.ViewModels;
 using Xamarin.Forms;
 
 namespace curecon
@@ -13,9 +15,14 @@ namespace curecon
     [DesignTimeVisible(true)]
     public partial class MainPage : ContentPage
     {
+        public CurrencyListViewModel VM { get; set; }
+
         public MainPage()
         {
             InitializeComponent();
+
+            VM = new CurrencyListViewModel();
+            this.BindingContext = VM;
         }
     }
 }

@@ -1,0 +1,47 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using curecon.Core;
+
+namespace curecon.ViewModels
+{
+    public class CurrencyListViewModel : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public Converter Converter { get; set; }
+        public ObservableCollection<CurrencyViewModel> Currencies { get; set; }
+
+        public CurrencyListViewModel()
+        {
+            Currencies = new ObservableCollection<CurrencyViewModel>();
+
+            LoadDataAsync();
+        }
+
+        private async Task LoadDataAsync()
+        {
+            await LoadConverterAsync();
+
+            foreach (var model in Converter.CurrencyModels)
+            {
+                Currencies.Add(new CurrencyViewModel() { Code = model.Code, Name = model.Name, FlagUri = model.FlagUri });
+            }
+
+            OnPropertyChanged(nameof(Currencies));
+        }
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private async Task LoadConverterAsync()
+        {
+            Converter = new Converter();
+            await Converter.LoadCurrenciesAsync();
+        }
+    }
+}
