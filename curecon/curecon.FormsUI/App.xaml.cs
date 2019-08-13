@@ -1,9 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
-using curecon.Core;
-using curecon.FormsUI;
+﻿using curecon.FormsUI;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace curecon
 {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using curecon.Core;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
@@ -19,21 +20,55 @@ namespace curecon.ViewModels
             AddCurrencyCommand = new Command(RequestAddCurrency);
         }
 
+        public void Convert(ConvertedValueViewModel currencyFrom)
+        {
+            if (ConvertedValuesList.Count <= 1)
+            {
+                return;
+            }
+            if (currencyFrom.Rate == 0)
+            {
+                return;
+            }
+            foreach (var currency in ConvertedValuesList)
+            {
+                if (currency == currencyFrom)
+                {
+                    continue;
+                }
+                currency.Value = currencyFrom.Value / currencyFrom.Rate * currency.Rate;
+                currency.Value = Math.Round(currency.Value, 7);
+                if (currency.Value > 0.00001) currency.Value = Math.Round(currency.Value, 5);
+                if (currency.Value > 0.0001) currency.Value = Math.Round(currency.Value, 4);
+                if (currency.Value > 0.001) currency.Value = Math.Round(currency.Value, 3);
+                if (currency.Value > 0.01) currency.Value = Math.Round(currency.Value, 2);
+                currency.OnPropertyChanged(nameof(currency.Value));
+            }
+        }
+
+
         private void RequestAddCurrency()
         {
             AddCurrencyRequested?.Invoke(this, new EventArgs());
         }
 
-        public void AddCurrency(CurrencyViewModel currencyVieModel)
+        public async void AddCurrency(CurrencyViewModel currencyViewModel)
         {
-            ConvertedValuesList.Add(new ConvertedValueViewModel() { Code = currencyVieModel.Code, FlagUri = currencyVieModel.FlagUri, Value = 1m });
+            var service = new RateService();
+            var baseCurrencyCode = ConvertedValuesList.Count > 0 ? ConvertedValuesList[0].Code : currencyViewModel.Code;
+            var newCurVM = new ConvertedValueViewModel()
+            {
+                Rate = await service.GetRateAsync(baseCurrencyCode, currencyViewModel.Code),
+                Code = currencyViewModel.Code,
+                FlagUri = currencyViewModel.FlagUri,
+                Value = 0
+            };
+            ConvertedValuesList.Add(newCurVM);
             OnPropertyChanged(nameof(ConvertedValuesList));
         }
 
         private void LoadData()
         {
-            ConvertedValuesList.Add(new ConvertedValueViewModel() { Code = "RUB", FlagUri = "https://www.countryflags.io/be/flat/64.png", Value = 1m });
-            ConvertedValuesList.Add(new ConvertedValueViewModel() { Code = "USD", FlagUri = "https://www.countryflags.io/ae/flat/64.png", Value = 1.23m });
         }
 
         private void OnPropertyChanged(string propertyName)

@@ -34,5 +34,14 @@ namespace curecon.FormsUI
               };
             this.Navigation.PushAsync(curList);
         }
+
+        private void Entry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (((Entry)sender).IsFocused)
+            {
+                var selectedCurrency = (ConvertedValueViewModel)((Entry)sender).BindingContext;
+                VM.Convert(selectedCurrency);
+            }
+        }
     }
 }

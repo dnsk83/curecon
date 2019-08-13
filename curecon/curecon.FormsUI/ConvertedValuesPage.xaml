@@ -7,18 +7,24 @@
              x:Class="curecon.FormsUI.ConvertedValuesPage">
     <ContentPage.Content>
         <StackLayout>
-            <ListView ItemsSource="{Binding ConvertedValuesList}">
+            <ListView ItemsSource="{Binding ConvertedValuesList}" x:Name="listView">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Orientation="Horizontal">
                                 <Image WidthRequest="64"
                                        HeightRequest="64"
-                                       Source="{Binding FlagUri}" />
+                                       Source="{Binding FlagUri}"
+                                       VerticalOptions="CenterAndExpand" />
                                 <Label FontSize="Caption"
-                                       Text="{Binding Code}" />
+                                       Text="{Binding Code}"
+                                       VerticalOptions="CenterAndExpand"
+                                       VerticalTextAlignment="Center" />
                                 <Entry Text="{Binding Value}"
-                                       Keyboard="Numeric" />
+                                       Keyboard="Numeric"
+                                       TextChanged="Entry_TextChanged"
+                                       HorizontalOptions="FillAndExpand"
+                                       HorizontalTextAlignment="End"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
