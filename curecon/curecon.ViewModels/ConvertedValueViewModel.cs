@@ -6,6 +6,7 @@ using System.Text;
 
 namespace curecon.ViewModels
 {
+    [Serializable]
     public class ConvertedValueViewModel : INotifyPropertyChanged
     {
         public double Rate { get; set; }

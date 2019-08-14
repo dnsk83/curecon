@@ -2,6 +2,9 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace curecon.ViewModels
 {
@@ -15,8 +18,7 @@ namespace curecon.ViewModels
         public ConvertedValuesListViewModel()
         {
             ConvertedValuesList = new ObservableCollection<ConvertedValueViewModel>();
-            LoadData();
-            OnPropertyChanged(nameof(ConvertedValuesList));
+            LoadListAsync();
             AddCurrencyCommand = new Command(RequestAddCurrency);
         }
 
@@ -65,10 +67,50 @@ namespace curecon.ViewModels
             };
             ConvertedValuesList.Add(newCurVM);
             OnPropertyChanged(nameof(ConvertedValuesList));
+            SaveListAsync();
         }
 
-        private void LoadData()
+        private async Task SaveListAsync()
         {
+            await Task.Run(() =>
+            {
+                XmlSerializer formatter = new XmlSerializer(typeof(ConvertedValueViewModel[]));
+                var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "listtoconvert.xml");
+                using (var writer = new StreamWriter(path))
+                {
+                    try
+                    {
+                        var values = new ConvertedValueViewModel[ConvertedValuesList.Count];
+                        for (int i = 0; i < ConvertedValuesList.Count; i++)
+                        {
+                            values[i] = ConvertedValuesList[i];
+                        }
+                        formatter.Serialize(writer, values);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        throw;
+                    }
+                }
+            });
+        }
+
+        private async Task LoadListAsync()
+        {
+            await Task.Run(() =>
+            {
+                XmlSerializer formatter = new XmlSerializer(typeof(ConvertedValueViewModel[]));
+                using (var fs = new StreamReader(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "listtoconvert.xml")))
+                {
+                    ConvertedValueViewModel[] loadedList = (ConvertedValueViewModel[])formatter.Deserialize(fs);
+                    foreach (ConvertedValueViewModel newCurVM in loadedList)
+                    {
+                        ConvertedValuesList.Add(newCurVM);
+                    }
+                }
+            });
+            OnPropertyChanged(nameof(ConvertedValuesList));
         }
 
         private void OnPropertyChanged(string propertyName)
