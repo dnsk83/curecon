@@ -10,6 +10,8 @@ namespace curecon.ViewModels
 {
     public class ConvertedValuesListViewModel : INotifyPropertyChanged
     {
+        private bool Initialized;
+
         public event EventHandler AddCurrencyRequested;
         public event PropertyChangedEventHandler PropertyChanged;
         public ObservableCollection<ConvertedValueViewModel> ConvertedValuesList { get; set; }
@@ -23,7 +25,11 @@ namespace curecon.ViewModels
 
         public void OnAppearing()
         {
-            LoadListAsync();
+            if (!Initialized)
+            {
+                LoadListAsync();
+                Initialized = true;
+            }
         }
 
         public void Convert(ConvertedValueViewModel currencyFrom)
