@@ -18,8 +18,12 @@ namespace curecon.ViewModels
         public ConvertedValuesListViewModel()
         {
             ConvertedValuesList = new ObservableCollection<ConvertedValueViewModel>();
-            LoadListAsync();
             AddCurrencyCommand = new Command(RequestAddCurrency);
+        }
+
+        public void OnAppearing()
+        {
+            LoadListAsync();
         }
 
         public void Convert(ConvertedValueViewModel currencyFrom)
@@ -78,20 +82,12 @@ namespace curecon.ViewModels
                 var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "listtoconvert.xml");
                 using (var writer = new StreamWriter(path))
                 {
-                    try
+                    var values = new ConvertedValueViewModel[ConvertedValuesList.Count];
+                    for (int i = 0; i < ConvertedValuesList.Count; i++)
                     {
-                        var values = new ConvertedValueViewModel[ConvertedValuesList.Count];
-                        for (int i = 0; i < ConvertedValuesList.Count; i++)
-                        {
-                            values[i] = ConvertedValuesList[i];
-                        }
-                        formatter.Serialize(writer, values);
-
+                        values[i] = ConvertedValuesList[i];
                     }
-                    catch (Exception ex)
-                    {
-                        throw;
-                    }
+                    formatter.Serialize(writer, values);
                 }
             });
         }
@@ -101,7 +97,8 @@ namespace curecon.ViewModels
             await Task.Run(() =>
             {
                 XmlSerializer formatter = new XmlSerializer(typeof(ConvertedValueViewModel[]));
-                using (var fs = new StreamReader(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "listtoconvert.xml")))
+                var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "listtoconvert.xml");
+                using (var fs = new StreamReader(path))
                 {
                     ConvertedValueViewModel[] loadedList = (ConvertedValueViewModel[])formatter.Deserialize(fs);
                     foreach (ConvertedValueViewModel newCurVM in loadedList)

@@ -25,6 +25,12 @@ namespace curecon.FormsUI
             VM.AddCurrencyRequested += VM_AddCurrencyRequested;
         }
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            VM.OnAppearing();
+        }
+
         private void VM_AddCurrencyRequested(object sender, EventArgs e)
         {
             var curList = new CurrenciesListPage();
