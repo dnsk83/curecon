@@ -4,7 +4,12 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="curecon.FormsUI.ConvertedValuesPage">
+             x:Class="curecon.FormsUI.ConvertedValuesPage"
+             Title="Converter">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add"
+                     Command="{Binding AddCurrencyCommand}" />
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
             <ListView ItemsSource="{Binding ConvertedValuesList}" x:Name="listView">
@@ -30,8 +35,6 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button Text="Add"
-                    Command="{Binding AddCurrencyCommand}" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
