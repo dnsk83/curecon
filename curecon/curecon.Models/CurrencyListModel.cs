@@ -13,7 +13,8 @@ namespace curecon.Models
         public CurrencyListModel()
         {
             CurrencyModels = new List<CurrencyModel>();
-            CountriesService = new CountriesService();
+            // CountriesService = new CountriesService();
+            CountriesService = new CachedCountriesService();
         }
 
         public async Task LoadCurrenciesAsync()
