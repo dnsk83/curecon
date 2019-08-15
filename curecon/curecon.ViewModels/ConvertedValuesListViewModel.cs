@@ -22,7 +22,6 @@ namespace curecon.ViewModels
         {
             ConvertedValuesList = new ObservableCollection<ConvertedValueViewModel>();
             AddCurrencyCommand = new Command(RequestAddCurrency);
-            // RateService = new RateService(); 
             RateService = new CashedRateService(); 
         }
 
@@ -94,6 +93,7 @@ namespace curecon.ViewModels
                     for (int i = 0; i < ConvertedValuesList.Count; i++)
                     {
                         values[i] = ConvertedValuesList[i];
+                        values[i].Value = 0;
                     }
                     formatter.Serialize(writer, values);
                 }
@@ -102,16 +102,26 @@ namespace curecon.ViewModels
 
         private async Task LoadListAsync()
         {
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
                 XmlSerializer formatter = new XmlSerializer(typeof(ConvertedValueViewModel[]));
                 var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "listtoconvert.xml");
                 using (var fs = new StreamReader(path))
                 {
+                    string baseCurrencyCode = "";
                     ConvertedValueViewModel[] loadedList = (ConvertedValueViewModel[])formatter.Deserialize(fs);
                     foreach (ConvertedValueViewModel newCurVM in loadedList)
                     {
                         ConvertedValuesList.Add(newCurVM);
+                        if (ConvertedValuesList.Count == 1)
+                        {
+                            baseCurrencyCode = newCurVM.Code;
+                            newCurVM.Rate = 1;
+                        }
+                        else
+                        {
+                            newCurVM.Rate = await RateService.GetRateAsync(baseCurrencyCode, newCurVM.Code);
+                        }
                     }
                 }
             });
