@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace curecon.Core
 {
-    public class CountriesService
+    public class CountriesService : ICountriesService
     {
 
         public async Task<IEnumerable<Country>> GetCountriesAsync()

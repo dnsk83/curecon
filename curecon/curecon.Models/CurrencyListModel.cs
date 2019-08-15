@@ -7,17 +7,18 @@ namespace curecon.Models
 {
     public class CurrencyListModel
     {
+        ICountriesService CountriesService;
         public List<CurrencyModel> CurrencyModels { get; set; }
 
         public CurrencyListModel()
         {
             CurrencyModels = new List<CurrencyModel>();
+            CountriesService = new CountriesService();
         }
 
         public async Task LoadCurrenciesAsync()
         {
-            var service = new CountriesService();
-            var countryDtos = await service.GetCountriesAsync();
+            var countryDtos = await CountriesService.GetCountriesAsync();
             foreach (var dto in countryDtos)
             {
                 foreach (var currency in dto.Currencies)
