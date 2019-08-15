@@ -5,8 +5,10 @@
              x:Class="curecon.FormsUI.CurrenciesListPage">
     <StackLayout>
         <!-- Place new controls here -->
-        <ListView
-            ItemsSource="{Binding Currencies}"
+        <Entry HorizontalOptions="FillAndExpand"
+               Placeholder="Filter"
+               TextChanged="Entry_TextChanged"/>
+        <ListView ItemsSource="{Binding FilteredCurrencies}"
             ItemSelected="ListView_ItemSelected">
             <ListView.ItemTemplate>
                 <DataTemplate>

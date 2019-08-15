@@ -32,6 +32,11 @@ namespace curecon.FormsUI
             CurrencySelected?.Invoke(this, new CurrencySelectedEventArgs((CurrencyViewModel)e.SelectedItem));
             Navigation.PopAsync();
         }
+
+        private void Entry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            VM.OnFilterChanged(e.NewTextValue);
+        }
     }
 
     public class CurrencySelectedEventArgs
