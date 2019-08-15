@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace curecon.Core
 {
-    public class RateService
+    public class RateService : IRateService
     {
         public async Task<double> GetRateAsync(string convertFrom, string convertTo)
         {

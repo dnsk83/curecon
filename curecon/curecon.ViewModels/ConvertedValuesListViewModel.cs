@@ -11,6 +11,7 @@ namespace curecon.ViewModels
     public class ConvertedValuesListViewModel : INotifyPropertyChanged
     {
         private bool Initialized;
+        IRateService RateService;
 
         public event EventHandler AddCurrencyRequested;
         public event PropertyChangedEventHandler PropertyChanged;
@@ -21,6 +22,8 @@ namespace curecon.ViewModels
         {
             ConvertedValuesList = new ObservableCollection<ConvertedValueViewModel>();
             AddCurrencyCommand = new Command(RequestAddCurrency);
+            // RateService = new RateService(); 
+            RateService = new CashedRateService(); 
         }
 
         public void OnAppearing()
@@ -66,11 +69,10 @@ namespace curecon.ViewModels
 
         public async void AddCurrency(CurrencyViewModel currencyViewModel)
         {
-            var service = new RateService();
             var baseCurrencyCode = ConvertedValuesList.Count > 0 ? ConvertedValuesList[0].Code : currencyViewModel.Code;
             var newCurVM = new ConvertedValueViewModel()
             {
-                Rate = await service.GetRateAsync(baseCurrencyCode, currencyViewModel.Code),
+                Rate = await RateService.GetRateAsync(baseCurrencyCode, currencyViewModel.Code),
                 Code = currencyViewModel.Code,
                 FlagUri = currencyViewModel.FlagUri,
                 Value = 0
